@@ -1,4 +1,4 @@
-import { ClipLoader } from "react-spinners";
+import { RingLoader } from "react-spinners";
 
 const Spinner = () => {
   return (
@@ -11,7 +11,7 @@ const Spinner = () => {
           alignItems: "center",
         }}
       >
-        <ClipLoader size={150} />
+        <RingLoader size={150} />
       </section>
     </>
   );

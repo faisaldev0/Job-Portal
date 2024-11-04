@@ -1,5 +1,5 @@
-/* eslint-disable no-self-assign */
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-self-assign */
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 

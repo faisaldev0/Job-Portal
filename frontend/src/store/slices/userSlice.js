@@ -1,3 +1,5 @@
+/* eslint-disable no-self-assign */
+/* eslint-disable no-unused-vars */
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -11,7 +13,7 @@ const userSlice = createSlice({
     message: null,
   },
   reducers: {
-    registerRequest(state) {
+    registerRequest(state, action) {
       state.loading = true;
       state.isAuthenticated = false;
       state.user = {};
@@ -32,7 +34,7 @@ const userSlice = createSlice({
       state.error = action.payload;
       state.message = null;
     },
-    loginRequest(state) {
+    loginRequest(state, action) {
       state.loading = true;
       state.isAuthenticated = false;
       state.user = {};
@@ -53,7 +55,7 @@ const userSlice = createSlice({
       state.error = action.payload;
       state.message = null;
     },
-    fetchUserRequest(state) {
+    fetchUserRequest(state, action) {
       state.loading = true;
       state.isAuthenticated = false;
       state.user = {};
@@ -71,22 +73,23 @@ const userSlice = createSlice({
       state.user = {};
       state.error = action.payload;
     },
-    logoutSuccess(state) {
+    logoutSuccess(state, action) {
       state.isAuthenticated = false;
       state.user = {};
       state.error = null;
     },
     logoutFailed(state, action) {
+      state.isAuthenticated = state.isAuthenticated;
+      state.user = state.user;
       state.error = action.payload;
     },
-    clearAllErrors(state) {
+    clearAllErrors(state, action) {
       state.error = null;
-      state.message = null; // Also clear message if needed
+      state.user = state.user;
     },
   },
 });
 
-// Registration
 export const register = (data) => async (dispatch) => {
   dispatch(userSlice.actions.registerRequest());
   try {
@@ -101,15 +104,10 @@ export const register = (data) => async (dispatch) => {
     dispatch(userSlice.actions.registerSuccess(response.data));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
-    const errorMessage =
-      error.response && error.response.data && error.response.data.message
-        ? error.response.data.message
-        : error.message || "Something went wrong!";
-    dispatch(userSlice.actions.registerFailed(errorMessage));
+    dispatch(userSlice.actions.registerFailed(error.response.data.message));
   }
 };
 
-// Login
 export const login = (data) => async (dispatch) => {
   dispatch(userSlice.actions.loginRequest());
   try {
@@ -124,17 +122,11 @@ export const login = (data) => async (dispatch) => {
     dispatch(userSlice.actions.loginSuccess(response.data));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
-    const errorMessage =
-      error.response && error.response.data && error.response.data.message
-        ? error.response.data.message
-        : error.message || "Something went wrong!";
-    dispatch(userSlice.actions.loginFailed(errorMessage));
+    dispatch(userSlice.actions.loginFailed(error.response.data.message));
   }
 };
 
-// Fetch User Details
 export const getUser = () => async (dispatch) => {
-  console.log('Authentication Error')
   dispatch(userSlice.actions.fetchUserRequest());
   try {
     const response = await axios.get(
@@ -146,24 +138,24 @@ export const getUser = () => async (dispatch) => {
     dispatch(userSlice.actions.fetchUserSuccess(response.data.user));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
-    dispatch(userSlice.actions.fetchUserFailed(error.response?.data?.message || "Failed to fetch user"));
+    dispatch(userSlice.actions.fetchUserFailed(error.response.data.message));
   }
 };
-
-// Logout
 export const logout = () => async (dispatch) => {
   try {
-    await axios.get("http://localhost:4000/api/v1/user/logout", {
-      withCredentials: true,
-    });
+    const response = await axios.get(
+      "http://localhost:4000/api/v1/user/logout",
+      {
+        withCredentials: true,
+      }
+    );
     dispatch(userSlice.actions.logoutSuccess());
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
-    dispatch(userSlice.actions.logoutFailed(error.response?.data?.message || "Logout failed"));
+    dispatch(userSlice.actions.logoutFailed(error.response.data.message));
   }
 };
 
-// Clear All Errors
 export const clearAllUserErrors = () => (dispatch) => {
   dispatch(userSlice.actions.clearAllErrors());
 };

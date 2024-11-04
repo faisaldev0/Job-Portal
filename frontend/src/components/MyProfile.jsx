@@ -82,11 +82,7 @@ const MyProfile = () => {
         <input
           type="text"
           disabled
-          value={
-            user && user.createdAt 
-              ? new Date(user.createdAt).toISOString().substring(0, 10) 
-              : "Unknown"
-          }
+          value={user && user.createdAt}
           onChange={(e) => e.target.value}
         />
       </div>

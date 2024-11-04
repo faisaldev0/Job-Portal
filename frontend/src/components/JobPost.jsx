@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -36,6 +38,14 @@ const JobPost = () => {
     "Database Administration",
     "Network Administration",
     "UI/UX Design",
+    "Game Development",
+    "IoT (Internet of Things)",
+    "Big Data",
+    "Machine Learning",
+    "IT Project Management",
+    "IT Support and Helpdesk",
+    "Systems Administration",
+    "IT Consulting",
   ];
 
   const cities = [
@@ -49,12 +59,23 @@ const JobPost = () => {
     "Quetta",
     "Peshawar",
     "Sialkot",
+    "Gujranwala",
+    "Sargodha",
+    "Bahawalpur",
+    "Sukkur",
+    "Mardan",
+    "Mingora",
+    "Sheikhupura",
+    "Mandi Bahauddin",
+    "Larkana",
+    "Nawabshah",
   ];
 
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   const { loading, error, message } = useSelector((state) => state.jobs);
   const dispatch = useDispatch();
 
-  const handlePostJob = () => {
+  const handlePostJob = (e) => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("jobType", jobType);
@@ -63,19 +84,15 @@ const JobPost = () => {
     formData.append("introduction", introduction);
     formData.append("responsibilities", responsibilities);
     formData.append("qualifications", qualifications);
-    offers && formData.append("offers", offers || "");
+    offers && formData.append("offers", offers);
     formData.append("jobNiche", jobNiche);
     formData.append("salary", salary);
     hiringMultipleCandidates &&
-      formData.append(
-        "hiringMultipleCandidates",
-        hiringMultipleCandidates || ""
-      );
+      formData.append("hiringMultipleCandidates", hiringMultipleCandidates);
     personalWebsiteTitle &&
-      formData.append("personalWebsiteTitle", personalWebsiteTitle || "");
+      formData.append("personalWebsiteTitle", personalWebsiteTitle);
     personalWebsiteUrl &&
-      formData.append("personalWebsiteUrl", personalWebsiteUrl || "");
-    console.log([...formData.entries()]);
+      formData.append("personalWebsiteUrl", personalWebsiteUrl);
 
     dispatch(postJob(formData));
   };
@@ -115,12 +132,8 @@ const JobPost = () => {
         <label>Location (City)</label>
         <select value={location} onChange={(e) => setLocation(e.target.value)}>
           <option value="">Select Job Type</option>
-          {cities.map((element, index) => {
-            return (
-              <option key={index} value={element}>
-                {element}
-              </option>
-            );
+          {cities.map((element,index) => {
+            return <option key={index} value={element}>{element}</option>;
           })}
         </select>
       </div>
@@ -178,12 +191,8 @@ const JobPost = () => {
         <label>Job Niche</label>
         <select value={jobNiche} onChange={(e) => setJobNiche(e.target.value)}>
           <option value="">Select Job Niche</option>
-          {nichesArray.map((element, index) => {
-            return (
-              <option key={index} value={element}>
-                {element}
-              </option>
-            );
+          {nichesArray.map((element,index) => {
+            return <option key={index} value={element}>{element}</option>;
           })}
         </select>
       </div>

@@ -1145,7 +1145,7 @@ p {
 }
 .account_components .applications_container .card {
   margin-bottom: 30px;
-  background: #8080803d;
+  box-shadow: 0 0 0 0.5px black;
   padding: 25px 12px;
   border-radius: 7px;
 }
@@ -1157,8 +1157,8 @@ p {
   color: gray;
 }
 .account_components .applications_container .card .sub-sec span {
-  font-weight: 600;
-  font-size: 20px;
+  font-weight: 400;
+  font-size: 16px;
   color: #111;
 }
 .account_components .applications_container .card .sub-sec textarea {

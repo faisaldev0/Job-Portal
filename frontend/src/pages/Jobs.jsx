@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -21,7 +19,6 @@ const Jobs = () => {
     setCity(city);
     setSelectedCity(city);
   };
-
   const handleNicheChange = (niche) => {
     setNiche(niche);
     setSelectedNiche(niche);
@@ -52,6 +49,16 @@ const Jobs = () => {
     "Quetta",
     "Peshawar",
     "Sialkot",
+    "Gujranwala",
+    "Sargodha",
+    "Bahawalpur",
+    "Sukkur",
+    "Mardan",
+    "Mingora",
+    "Sheikhupura",
+    "Mandi Bahauddin",
+    "Larkana",
+    "Nawabshah",
   ];
 
   const nichesArray = [
@@ -67,6 +74,14 @@ const Jobs = () => {
     "Database Administration",
     "Network Administration",
     "UI/UX Design",
+    "Game Development",
+    "IoT (Internet of Things)",
+    "Big Data",
+    "Machine Learning",
+    "IT Project Management",
+    "IT Support and Helpdesk",
+    "Systems Administration",
+    "IT Consulting",
   ];
 
   return (

@@ -1,43 +1,38 @@
-/* eslint-disable react/no-unescaped-entities */
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+/* eslint-disable no-unused-vars */
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   clearAllApplicationErrors,
-  deleteApplication,
-  fetchEmployerApplications,
   resetApplicationSlice,
+  deleteApplication,
+  fetchJobSeekerApplications,
 } from "../store/slices/applicationSlice";
-import Spinner from "./Spinner";
-import { Link } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
-const Applications = () => {
-  const { applications, loading, error, message } = useSelector(
+const MyApplications = () => {
+  const { user, isAuthenticated } = useSelector((state) => state.user);
+  const { loading, error, applications, message } = useSelector(
     (state) => state.applications
   );
-
   const dispatch = useDispatch();
 
-  // Fetch applications only on component mount
   useEffect(() => {
-    dispatch(fetchEmployerApplications());
-  }, [dispatch]);
+    dispatch(fetchJobSeekerApplications());
+  }, []);
 
-  // Handle error messages
   useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearAllApplicationErrors());
     }
-  }, [error, dispatch]);
-
-  // Handle success messages
-  useEffect(() => {
     if (message) {
       toast.success(message);
       dispatch(resetApplicationSlice());
+      dispatch(fetchJobSeekerApplications());
     }
-  }, [message, dispatch]);
+  }, [dispatch, error, message]);
 
   const handleDeleteApplication = (id) => {
     dispatch(deleteApplication(id));
@@ -48,67 +43,67 @@ const Applications = () => {
       {loading ? (
         <Spinner />
       ) : applications && applications.length <= 0 ? (
-        <h1>You have no applications from job seekers.</h1>
+        <h1 style={{ fontSize: "1.4rem", fontWeight: "600" }}>
+          You have not applied for any job.
+        </h1>
       ) : (
-        <div className="account_components">
-          <h3>Applications For Your Posted Jobs</h3>
-          <div className="applications_container">
-            {applications.map((element) => {
-              return (
-                <div className="card" key={element._id}>
-                  <p className="sub-sec">
-                    <span>Job Title: </span> {element.jobInfo.jobTitle}
-                  </p>
-                  <p className="sub-sec">
-                    <span>Applicant's Name: </span>{" "}
-                    {element.jobSeekerInfo.name}
-                  </p>
-                  <p className="sub-sec">
-                    <span>Applicant's Email:</span>{" "}
-                    {element.jobSeekerInfo.email}
-                  </p>
-                  <p className="sub-sec">
-                    <span>Applicant's Phone: </span>{" "}
-                    {element.jobSeekerInfo.phone}
-                  </p>
-                  <p className="sub-sec">
-                    <span>Applicant's Address: </span>{" "}
-                    {element.jobSeekerInfo.address}
-                  </p>
-                  <p className="sub-sec">
-                    <span>Applicant's CoverLetter: </span>
-                    <textarea
-                      value={element.jobSeekerInfo.coverLetter}
-                      rows={5}
-                      disabled
-                    ></textarea>
-                  </p>
-                  <div className="btn-wrapper">
-                    <button
-                      className="outline_btn"
-                      onClick={() => handleDeleteApplication(element._id)}
-                    >
-                      Delete Application
-                    </button>
-                    <Link
-                      to={
-                        element.jobSeekerInfo &&
-                        element.jobSeekerInfo.resume.url
-                      }
-                      className="btn"
-                      target="_blank"
-                    >
-                      View Resume
-                    </Link>
+        <>
+          <div className="account_components">
+            <h3>My Application For Jobs</h3>
+            <div className="applications_container">
+              {applications.map((element) => {
+                return (
+                  <div className="card" key={element._id}>
+                    <p className="sub-sec">
+                      <span>Job Title: </span> {element.jobInfo.jobTitle}
+                    </p>
+                    <p className="sub-sec">
+                      <span>Name</span> {element.jobSeekerInfo.name}
+                    </p>
+                    <p className="sub-sec">
+                      <span>Email</span> {element.jobSeekerInfo.email}
+                    </p>
+                    <p className="sub-sec">
+                      <span>Phone: </span> {element.jobSeekerInfo.phone}
+                    </p>
+                    <p className="sub-sec">
+                      <span>Address: </span> {element.jobSeekerInfo.address}
+                    </p>
+                    <p className="sub-sec">
+                      <span>Coverletter: </span>
+                      <textarea
+                        value={element.jobSeekerInfo.coverLetter}
+                        rows={5}
+                        disabled
+                      ></textarea>
+                    </p>
+                    <div className="btn-wrapper">
+                      <button
+                        className="outline_btn"
+                        onClick={() => handleDeleteApplication(element._id)}
+                      >
+                        Delete Application
+                      </button>
+                      <Link
+                        to={
+                          element.jobSeekerInfo &&
+                          element.jobSeekerInfo.resume.url
+                        }
+                        className="btn"
+                        target="_blank"
+                      >
+                        View Resume
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );
 };
 
-export default Applications;
+export default MyApplications;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { clearAllUserErrors, register } from "../store/slices/userSlice";
@@ -22,37 +22,26 @@ const Register = () => {
   const [resume, setResume] = useState("");
 
   const nichesArray = [
+    "Software Development",
     "Web Development",
-    "Software Engineering",
-    "Data Science",
-    "Digital Marketing",
-    "Graphic Design",
-    "Mobile App Development",
     "Cybersecurity",
+    "Data Science",
+    "Artificial Intelligence",
     "Cloud Computing",
     "DevOps",
+    "Mobile App Development",
+    "Blockchain",
+    "Database Administration",
+    "Network Administration",
     "UI/UX Design",
-    "SEO Specialist",
-    "Content Writing",
-    "Project Management",
-    "Network Engineering",
-    "Artificial Intelligence",
-    "Machine Learning",
-    "Blockchain Development",
-    "Video Editing",
     "Game Development",
-    "IT Support",
-    "E-commerce Development",
-    "Database Management",
-    "Social Media Management",
-    "Quality Assurance",
-    "System Administration",
-    "Product Management",
-    "Business Analysis",
-    "Augmented Reality/Virtual Reality",
-    "Full Stack Development",
-    "Front-end Development",
-    "Back-end Development",
+    "IoT (Internet of Things)",
+    "Big Data",
+    "Machine Learning",
+    "IT Project Management",
+    "IT Support and Helpdesk",
+    "Systems Administration",
+    "IT Consulting",
   ];
 
   const resumeHandler = (e) => {
@@ -94,7 +83,7 @@ const Register = () => {
     if (isAuthenticated) {
       navigateTo("/");
     }
-  }, [dispatch, error, loading, isAuthenticated, message, navigateTo]);
+  }, [dispatch, error, loading, isAuthenticated, message]);
 
   return (
     <>
@@ -281,4 +270,5 @@ const Register = () => {
     </>
   );
 };
+
 export default Register;
