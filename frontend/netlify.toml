@@ -1,0 +1,19 @@
+# netlify.toml
+
+[build]
+  command = "npm run build"
+  publish = "build"
+
+[[redirects]]
+  # Redirect all routes to index.html (useful for SPA)
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  # Allow cross-origin requests for your backend URL
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "https://job-portal-backend-1-sgbd.onrender.com"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
