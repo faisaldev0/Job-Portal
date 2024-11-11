@@ -30,16 +30,10 @@ const Register = () => {
     "Cloud Computing",
     "DevOps",
     "Mobile App Development",
-    "Blockchain",
     "Database Administration",
-    "Network Administration",
     "UI/UX Design",
-    "Game Development",
     "IoT (Internet of Things)",
-    "Big Data",
-    "Machine Learning",
     "IT Project Management",
-    "IT Support and Helpdesk",
     "Systems Administration",
     "IT Consulting",
   ];
@@ -83,7 +77,7 @@ const Register = () => {
     if (isAuthenticated) {
       navigateTo("/");
     }
-  }, [dispatch, error, loading, isAuthenticated, message]);
+  }, [dispatch, error, loading, isAuthenticated, message, navigateTo]);
 
   return (
     <>
