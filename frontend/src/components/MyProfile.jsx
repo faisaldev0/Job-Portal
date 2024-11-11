@@ -1,7 +1,21 @@
 import { useSelector } from "react-redux";
 
 const MyProfile = () => {
-  const { user } = useSelector((state) => state.user);
+  const { user, loading } = useSelector((state) => state.user);
+
+  // Safely access user fields with fallback to empty string or default values
+  const userName = user?.name || "";
+  const userEmail = user?.email || "";
+  const userPhone = user?.phone || "";
+  const userAddress = user?.address || "";
+  const userRole = user?.role || "";
+  const userCreatedAt = user?.createdAt || "";
+   const niches = user?.niches || {};
+
+  if (loading) {
+    return <div>Loading...</div>;  // Show loading state while user data is being fetched
+  }
+
   return (
     <div className="account_components">
       <h3>My Profile</h3>
@@ -10,7 +24,7 @@ const MyProfile = () => {
         <input
           type="text"
           disabled
-          value={user && user.name}
+          value={userName}
           onChange={(e) => e.target.value}
         />
       </div>
@@ -19,7 +33,7 @@ const MyProfile = () => {
         <input
           type="email"
           disabled
-          value={user && user.email}
+          value={userEmail}
           onChange={(e) => e.target.value}
         />
       </div>
@@ -32,19 +46,19 @@ const MyProfile = () => {
             <input
               type="text"
               disabled
-              value={user && user.niches.firstNiche}
+              value={niches.firstNiche || ""}
               onChange={(e) => e.target.value}
             />
             <input
               type="text"
               disabled
-              value={user && user.niches.secondNiche}
+              value={niches.secondNiche || ""}
               onChange={(e) => e.target.value}
             />
             <input
               type="text"
               disabled
-              value={user && user.niches.thirdNiche}
+              value={niches.thirdNiche || ""}
               onChange={(e) => e.target.value}
             />
           </div>
@@ -55,7 +69,7 @@ const MyProfile = () => {
         <input
           type="number"
           disabled
-          value={user && user.phone}
+          value={userPhone}
           onChange={(e) => e.target.value}
         />
       </div>
@@ -64,7 +78,7 @@ const MyProfile = () => {
         <input
           type="text"
           disabled
-          value={user && user.address}
+          value={userAddress}
           onChange={(e) => e.target.value}
         />
       </div>
@@ -73,7 +87,7 @@ const MyProfile = () => {
         <input
           type="text"
           disabled
-          value={user && user.role}
+          value={userRole}
           onChange={(e) => e.target.value}
         />
       </div>
@@ -82,7 +96,7 @@ const MyProfile = () => {
         <input
           type="text"
           disabled
-          value={user && user.createdAt}
+          value={userCreatedAt}
           onChange={(e) => e.target.value}
         />
       </div>

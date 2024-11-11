@@ -32,34 +32,11 @@ const Jobs = () => {
       dispatch(clearAllJobErrors());
     }
     dispatch(fetchJobs(city, niche, searchKeyword));
-  }, [dispatch, error, city, niche]);
+  }, [dispatch, error, city, niche, searchKeyword]);
 
   const handleSearch = () => {
     dispatch(fetchJobs(city, niche, searchKeyword));
   };
-
-  const cities = [
-    "Karachi",
-    "Lahore",
-    "Islamabad",
-    "Rawalpindi",
-    "Faisalabad",
-    "Multan",
-    "Hyderabad",
-    "Quetta",
-    "Peshawar",
-    "Sialkot",
-    "Gujranwala",
-    "Sargodha",
-    "Bahawalpur",
-    "Sukkur",
-    "Mardan",
-    "Mingora",
-    "Sheikhupura",
-    "Mandi Bahauddin",
-    "Larkana",
-    "Nawabshah",
-  ];
 
   const nichesArray = [
     "Software Development",
@@ -70,18 +47,25 @@ const Jobs = () => {
     "Cloud Computing",
     "DevOps",
     "Mobile App Development",
-    "Blockchain",
     "Database Administration",
-    "Network Administration",
     "UI/UX Design",
-    "Game Development",
     "IoT (Internet of Things)",
-    "Big Data",
-    "Machine Learning",
     "IT Project Management",
-    "IT Support and Helpdesk",
     "Systems Administration",
     "IT Consulting",
+  ];
+
+  const cities = [
+    "Karachi",
+    "Lahore",
+    "Islamabad",
+    "Rawalpindi",
+    "Peshawar",
+    "Quetta",
+    "Multan",
+    "Faisalabad",
+    "Sialkot",
+    "Gujranwala"
   ];
 
   return (

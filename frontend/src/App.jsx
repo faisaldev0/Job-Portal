@@ -12,15 +12,19 @@ import PostApplication from "./pages/PostApplication";
 import Register from "./pages/Register";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./store/slices/userSlice";
 
 const App = () => {
   const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state) => state.user);
+
 
   useEffect(() => {
-    dispatch(getUser());
-  }, []);
+    if (isAuthenticated) {
+      dispatch(getUser());
+    }
+  }, [isAuthenticated, dispatch]);
 
   return (
     <>
