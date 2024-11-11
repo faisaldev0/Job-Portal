@@ -43,7 +43,7 @@ const MyApplications = () => {
       {loading ? (
         <Spinner />
       ) : applications && applications.length <= 0 ? (
-        <h1 style={{ fontSize: "1.4rem", fontWeight: "600" }}>
+        <h1>
           You have not applied for any job.
         </h1>
       ) : (

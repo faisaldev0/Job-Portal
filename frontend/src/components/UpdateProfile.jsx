@@ -30,7 +30,8 @@ const UpdateProfile = () => {
   const [resume, setResume] = useState(null);
   const [resumePrview, setResumePreview] = useState(user && user.resume?.url);
 
-  const handleUpdateProfile = () => {
+  const handleUpdateProfile = (e) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
@@ -57,6 +58,7 @@ const UpdateProfile = () => {
       toast.success("Profile Updated.");
       dispatch(getUser());
       dispatch(clearAllUpdateProfileErrors());
+      window.scrollTo(0, 0); 
     }
   }, [dispatch, loading, error, isUpdated, user]);
 
@@ -79,16 +81,10 @@ const UpdateProfile = () => {
     "Cloud Computing",
     "DevOps",
     "Mobile App Development",
-    "Blockchain",
     "Database Administration",
-    "Network Administration",
     "UI/UX Design",
-    "Game Development",
     "IoT (Internet of Things)",
-    "Big Data",
-    "Machine Learning",
     "IT Project Management",
-    "IT Support and Helpdesk",
     "Systems Administration",
     "IT Consulting",
   ];

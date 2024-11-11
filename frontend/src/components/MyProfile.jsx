@@ -3,17 +3,18 @@ import { useSelector } from "react-redux";
 const MyProfile = () => {
   const { user, loading } = useSelector((state) => state.user);
 
-  // Safely access user fields with fallback to empty string or default values
   const userName = user?.name || "";
   const userEmail = user?.email || "";
   const userPhone = user?.phone || "";
   const userAddress = user?.address || "";
   const userRole = user?.role || "";
   const userCreatedAt = user?.createdAt || "";
-   const niches = user?.niches || {};
+  const niches = user?.niches || {};
+
+  const formattedDate = new Date(userCreatedAt).toLocaleDateString("en-GB");
 
   if (loading) {
-    return <div>Loading...</div>;  // Show loading state while user data is being fetched
+    return <div>Loading...</div>;
   }
 
   return (
@@ -93,12 +94,7 @@ const MyProfile = () => {
       </div>
       <div>
         <label>Joined On</label>
-        <input
-          type="text"
-          disabled
-          value={userCreatedAt}
-          onChange={(e) => e.target.value}
-        />
+        <input type="text" disabled value={formattedDate} />
       </div>
     </div>
   );

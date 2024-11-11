@@ -17,14 +17,13 @@ import { getUser } from "./store/slices/userSlice";
 
 const App = () => {
   const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector((state) => state.user);
-
+  const { isAuthenticated, user } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(getUser());
+    if (isAuthenticated && !user) {
+      dispatch(getUser()); // Fetch user only if authenticated and user data is missing
     }
-  }, [isAuthenticated, dispatch]);
+  }, [isAuthenticated, user, dispatch]);
 
   return (
     <>
